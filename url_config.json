@@ -1,0 +1,7 @@
+[
+    {
+        "ip": "",
+        "url_high": "rtsp://:@/live/0/MAIN",
+        "url_low": "rtsp://:@/live/0/SUB"
+    }
+]
