@@ -1,7 +1,32 @@
 [
     {
-        "ip": "",
-        "url_high": "rtsp://:@/live/0/MAIN",
-        "url_low": "rtsp://:@/live/0/SUB"
+        "ip": "192.168.1.64",
+        "url_high": "rtsp://admin:@192.168.1.64/live/0/MAIN",
+        "url_low": "rtsp://admin:@192.168.1.64/live/0/SUB"
+    },
+    {
+        "ip": "192.168.1.65",
+        "url_high": "rtsp://admin:@192.168.1.65/live/0/MAIN",
+        "url_low": "rtsp://admin:@192.168.1.65/live/0/SUB"
+    },
+    {
+        "ip": "192.168.1.66",
+        "url_high": "rtsp://admin:@192.168.1.66/live/0/MAIN",
+        "url_low": "rtsp://admin:@192.168.1.66/live/0/SUB"
+    },
+    {
+        "ip": "192.168.1.67",
+        "url_high": "rtsp://admin:@192.168.1.67/live/0/MAIN",
+        "url_low": "rtsp://admin:@192.168.1.67/live/0/SUB"
+    },
+    {
+        "ip": "192.168.1.68",
+        "url_high": "rtsp://admin:@192.168.1.68/live/0/MAIN",
+        "url_low": "rtsp://admin:@192.168.1.68/live/0/SUB"
+    },
+    {
+        "ip": "192.168.1.69",
+        "url_high": "rtsp://admin:@192.168.1.69/live/0/MAIN",
+        "url_low": "rtsp://admin:@192.168.1.69/live/0/SUB"
     }
 ]

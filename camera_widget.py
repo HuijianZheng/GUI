@@ -165,25 +165,26 @@ class FollowWindow(QWidget):
         self.grid.addWidget(self.btn_close, 3, 4)
         self.btn_close.clicked.connect(self.on_btn_close)
 
-        positions =[(1,2),(1,1),(1,0),(0,2),(0,1),(0,0)]
+        positions =[(0,0),(0,1),(0,2),(1,0),(1,1),(1,2)]
         for pos, url in zip(positions, self.url_list):
             widget = VideoWidget(url, f"摄像头 {pos[0]/1*3+pos[1]+1}")
             label = widget.get_label()
             label.setFixedSize(640, 480)
             self.cameras[url] = VideoCamera(url, label)
-            widget.func=lambda:self.open_window(url)
+            widget.func=lambda u=url:self.open_window(u)
             self.grid.addWidget(widget, pos[0], pos[1])
 
     #=== 显示视频按 === #
     def on_btn_run(self):
         for url in self.url_list: #每次t都一样
+            old_thread = self.threads.get(url)
+            if old_thread:
+                old_thread[0].stop_thread()
             c=self.cameras[url]
             t=CameraThread(self.cameras[url],self.cameras[url].run_camera)
-            t.stop_thread()#清理线程
-            t.run()
+            #t.stop_thread()#清理线程
+            t.start()
             self.threads[url]=(t, c)
-
-
     #=== 暂停视频 === #
     def on_btn_pause(self):
         self.clear_threads()
@@ -215,13 +216,14 @@ class FollowWindow(QWidget):
         for (t, c) in self.threads.items():
             if t:
                 t.stop_thread()
- 
+        self.threads.clear()
 class CameraWindow(QWidget):
     def __init__(self,url):
         super().__init__()
         self.setWindowTitle("单摄像头显示")
         self.resize(1440, 1080)
         self.url=url
+        self.thread=None
 
         self.set_basic()
     def set_basic(self):
@@ -260,14 +262,16 @@ class CameraWindow(QWidget):
 
 
         #=== 摄像头线程启动 === #
+        old_thread = self.thread
+        if old_thread:
+            old_thread[0].stop_thread()
         self.c=VideoCamera(self.url,label_camera)
-        self.t=CameraThread(self.url)
-        self.t.stop_thread()#清理线程
-        self.t.create_camera_thread(self.c,self.c.run_camera)
-        self.t.start_thread()
+        self.t=CameraThread(self.c,self.c.run_camera)
+        self.t.start()
+        self.thread=(self.t,self.c)
 
- 
 
+        #=== 按钮区域 === #
         self.btn_last=QPushButton("返回上一级") 
         self.grid_1.addWidget(self.btn_last)
         self.btn_last.clicked.connect(self.on_btn_last)

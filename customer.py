@@ -171,12 +171,14 @@ class CameraThread(QThread):
         self.func=func
         self.obj=obj    
 
+        
     def run(self):
-        self.func()
+        self.func()  # 在新线程里执行摄像头循环
+
+
     def stop_thread(self):
         if self.obj:
             self.obj.stop()
-        self.quit()
         self.wait()
 class ClickableLabel(QLabel):#复写
     clicked = pyqtSignal()  # 自定义信号
